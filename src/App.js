@@ -9,7 +9,17 @@ function AppContent() {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div className="loading">로딩 중...</div>;
+    return (
+      <div className="loading">
+        <div className="loading-spinner"></div>
+        <div className="loading-text">로딩 중...</div>
+        <div className="loading-dots">
+          <div className="loading-dot"></div>
+          <div className="loading-dot"></div>
+          <div className="loading-dot"></div>
+        </div>
+      </div>
+    );
   }
 
   return isAuthenticated ? <SecretPage /> : <LoginPage />;
