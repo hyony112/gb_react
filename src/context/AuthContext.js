@@ -40,7 +40,9 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ password }),
       });
 
-      const result = await response.json();
+      const result = process.env.NODE_ENV === 'development' 
+        ? {success: true} // 개발 환경
+        : await response.json(); // 운영 환경
 
       if (result.success) {
         setIsAuthenticated(true);

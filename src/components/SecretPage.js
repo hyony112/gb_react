@@ -4,8 +4,10 @@ import './SecretPage.css';
 
 const SecretPage = () => {
   const { logout } = useAuth();
-  const [currentDate, setCurrentDate] = useState(new Date());
   const [ddayCount, setDdayCount] = useState(0);
+  const [videoData, setVideoData] = useState({});
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   // D-day 계산
   useEffect(() => {
@@ -14,6 +16,14 @@ const SecretPage = () => {
     const diffTime = targetDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     setDdayCount(diffDays);
+  }, []);
+
+  // video.json 데이터 로드
+  useEffect(() => {
+    fetch('/video.json')
+      .then(response => response.json())
+      .then(data => setVideoData(data))
+      .catch(error => console.error('Error loading video data:', error));
   }, []);
 
   // 달력 관련 상태
@@ -38,6 +48,18 @@ const SecretPage = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1));
   };
 
+  const formatDate = (year, month, day) => {
+    return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  };
+
+  const handleDateClick = (day) => {
+    const dateString = formatDate(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+    if (videoData[dateString]) {
+      setSelectedDate(dateString);
+      setShowVideoModal(true);
+    }
+  };
+
   const renderCalendar = () => {
     const { daysInMonth, startingDay } = getDaysInMonth(currentMonth);
     const days = [];
@@ -49,9 +71,17 @@ const SecretPage = () => {
     
     // 현재 달의 날들
     for (let day = 1; day <= daysInMonth; day++) {
+      const dateString = formatDate(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+      const hasVideo = videoData[dateString];
+      
       days.push(
-        <div key={day} className="calendar-day">
+        <div 
+          key={day} 
+          className={`calendar-day ${hasVideo ? 'has-video' : ''}`}
+          onClick={() => handleDateClick(day)}
+        >
           {day}
+          {hasVideo && <div className="video-indicator">🎥</div>}
         </div>
       );
     }
@@ -60,25 +90,60 @@ const SecretPage = () => {
   };
 
   const pairsData = [
-    ['효은', '성현', '지섭', '다혜', '효원', '', ''],
-    ['수정', '유성', '성빈', '다혜/아인', '효원', '', ''],
-    ['진경', '용현', '성빈', '다혜/아인', '효원', '', ''],
-    ['은진', '유성/용현', '지섭', '가영', '효원', '', '']
+    ['효은', '성현', '지섭', '다혜', '효원/민석', '', ''],
+    ['수정', '유성', '성빈', '다혜/아인', '효원/민석', '', ''],
+    ['진경', '용현', '성빈', '다혜/아인', '효원/민석', '', ''],
+    ['은진', '유성/용현', '지섭', '가영', '효원/민석', '', '']
   ];
 
   const headers = ['순희', '유령', '영수', '순영', '나상모', '멀티(남)', '멀티(여)'];
+
+  const VideoModal = () => {
+    if (!showVideoModal || !selectedDate) return null;
+
+    const videos = videoData[selectedDate];
+    const dateObj = new Date(selectedDate);
+    const formattedDate = `${dateObj.getFullYear()}년 ${dateObj.getMonth() + 1}월 ${dateObj.getDate()}일`;
+
+    return (
+      <div className="video-modal-overlay" onClick={() => setShowVideoModal(false)}>
+        <div className="video-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="video-modal-header">
+            <h3>{formattedDate} 연습 영상</h3>
+            <button 
+              className="close-button" 
+              onClick={() => setShowVideoModal(false)}
+            >
+              ✕
+            </button>
+          </div>
+          <div className="video-list">
+            {videos.map((video, index) => (
+              <a
+                key={index}
+                href={video.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="video-link"
+              >
+                {video.text}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="secret-page">
       <header className="dday-container">
         <div className="dday-title">🎯 공연까지</div>
-        <div className="dday-count">{ddayCount}일</div>
+        <div className="dday-count">D-{ddayCount}</div>
         <div className="dday-date">2025년 11월 8일</div>
       </header>
 
       <div className="content">
-        <h1>🎉 여기까지 오셨군요!</h1>
-        <p>이 페이지는 선택된 사람만 볼 수 있습니다.</p>
 
         <div className="pairs-container">
           <h2 className="pairs-title">페어 리스트</h2>
@@ -130,6 +195,7 @@ const SecretPage = () => {
           로그아웃
         </button>
       </div>
+      <VideoModal />
     </div>
   );
 };
