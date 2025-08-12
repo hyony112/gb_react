@@ -9,6 +9,7 @@ const SecretPage = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showSceneModal, setShowSceneModal] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   // D-day 계산
   useEffect(() => {
@@ -105,7 +106,7 @@ const SecretPage = () => {
     ['6', '', '일꾼1', '일꾼2', '', ''],
     ['7', '손님1', '', '', '손님2', ''],
     ['11', '손님1', '손님2', '손님3', '손님4', ''],
-    ['9', '상모직원2', '상모직원1', '', 'VIP', ''],
+    ['9', '상모직원2', '상모직원1', 'VIP', '', ''],
     ['11', '손님1', '손님2', '손님3', '손님4', '간판장수, 인쇄소주인'],
     ['12', '', '', '구청직원', '', ''],
     ['14', '', '', '상모직원', '', ''],
@@ -116,6 +117,46 @@ const SecretPage = () => {
   ];
 
   const subCharacterHeaders = ['SCENE', '순희', '유령', '영수', '순영', '상모'];
+
+  // 슬라이더 관련 함수들
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % 6);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + 6) % 6);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  // 각 슬라이드별 테이블 데이터 생성
+  const getSlideData = (slideIndex) => {
+    if (slideIndex === 0) {
+      // 전체 테이블
+      return {
+        headers: subCharacterHeaders,
+        data: subCharacterData
+      };
+    } else {
+      // 1열 + 해당 열만
+      const columnIndex = slideIndex;
+      return {
+        headers: [subCharacterHeaders[0], subCharacterHeaders[columnIndex]],
+        data: subCharacterData.map(row => [row[0], row[columnIndex]])
+      };
+    }
+  };
+
+  const slideTitles = [
+    '전체 부캐',
+    '순희 부캐',
+    '유령 부캐', 
+    '영수 부캐',
+    '순영 부캐',
+    '상모 부캐'
+  ];
 
   const sceneData = [
     ['PROLOGUE - 버려진 가게', '#1. PROLOGUE - 컴퍼니(off-stage)'],
@@ -271,24 +312,41 @@ const SecretPage = () => {
 
         <div className="pairs-container">
           <h2 className="pairs-title">부캐 리스트</h2>
-          <table className="pairs-table">
-            <thead>
-              <tr>
-                {subCharacterHeaders.map((header, index) => (
-                  <th key={index}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {subCharacterData.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  {row.map((cell, cellIndex) => (
-                    <td key={cellIndex}>{cell}</td>
+          <div className="sub-character-slider">
+            <button onClick={prevSlide}>&lt;</button>
+            <div className="slide-container">
+              {slideTitles.map((title, index) => (
+                <div
+                  key={index}
+                  className={`slide ${currentSlide === index ? 'active' : ''}`}
+                  onClick={() => goToSlide(index)}
+                >
+                  {title}
+                </div>
+              ))}
+            </div>
+            <button onClick={nextSlide}>&gt;</button>
+          </div>
+          <div className="sub-character-table-container">
+            <table className="sub-character-table">
+              <thead>
+                <tr>
+                  {getSlideData(currentSlide).headers.map((header, index) => (
+                    <th key={index}>{header}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {getSlideData(currentSlide).data.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((cell, cellIndex) => (
+                      <td key={cellIndex}>{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <div className="recording-container">
