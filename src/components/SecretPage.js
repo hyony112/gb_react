@@ -282,7 +282,7 @@ const SecretPage = () => {
 
       <header className="dday-container">
         <div className="dday-title">🎯 공연까지</div>
-        <div className="dday-count">D-{ddayCount}/div>
+        <div className="dday-count">D-{ddayCount}</div>
         <div className="dday-date">2025년 11월 8일</div>
       </header>
 
