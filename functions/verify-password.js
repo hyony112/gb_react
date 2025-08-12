@@ -32,7 +32,7 @@ exports.handler = async (event) => {
           'Set-Cookie': `gb_auth=ok; HttpOnly; Path=/; Max-Age=1800`, // 30분
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ success: true, m_url : '../secret.html' }),
+        body: JSON.stringify({ success: true }),
       };
 
     }else {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
@@ -8,7 +7,6 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,9 +20,7 @@ const LoginPage = () => {
 
     const result = await login(password);
     
-    if (result.success) {
-      navigate('/secret');
-    } else {
+    if (!result.success) {
       setError(result.error);
     }
     

@@ -1,7 +1,2 @@
 [build]
     functions = "functions/"
-
-[[redirects]]
-    from = "/secret.html"
-    to = "/.netlify/functions/secure"
-    status = 200
