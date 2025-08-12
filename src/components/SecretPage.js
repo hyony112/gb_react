@@ -8,6 +8,7 @@ const SecretPage = () => {
   const [videoData, setVideoData] = useState({});
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [showSceneModal, setShowSceneModal] = useState(false);
 
   // D-day 계산
   useEffect(() => {
@@ -90,13 +91,62 @@ const SecretPage = () => {
   };
 
   const pairsData = [
-    ['효은', '성현', '지섭', '다혜', '효원/민석', '', ''],
-    ['수정', '유성', '성빈', '다혜/아인', '효원/민석', '', ''],
-    ['진경', '용현', '성빈', '다혜/아인', '효원/민석', '', ''],
-    ['은진', '유성/용현', '지섭', '가영', '효원/민석', '', '']
+    ['효은', '성현', '지섭/용수', '다혜', '효원/민석', '', ''],
+    ['수정', '유성', '성빈/용수', '다혜/아인', '효원/민석', '', ''],
+    ['진경', '용현', '성빈/용수', '다혜/아인', '효원/민석', '', ''],
+    ['은진', '유성/용현', '지섭/용수', '가영', '효원/민석', '', '']
   ];
 
   const headers = ['순희', '유령', '영수', '순영', '나상모', '멀티(남)', '멀티(여)'];
+
+  const subCharacterData = [
+    ['Prologue', '', '', '컴퍼니댄서', '컴퍼니댄서', ''],
+    ['1', '환상직원3', '진상손님1', '환상직원1', '환상직원2, 진상손님2', '옆집할아버지'],
+    ['6', '', '일꾼1', '일꾼2', '', ''],
+    ['7', '손님1', '', '', '손님2', ''],
+    ['11', '손님1', '손님2', '손님3', '손님4', ''],
+    ['9', '상모직원2', '상모직원1', 'VIP', '', ''],
+    ['11', '손님1', '손님2', '손님3', '손님4', '간판장수, 인쇄소주인'],
+    ['12', '', '', '구청직원', '', ''],
+    ['14', '', '', '상모직원', '', ''],
+    ['16', '손님1', '손님2', '손님3', '손님4', ''],
+    ['17', '환상직원3', '', '환상직원1', '환상직원2', '옆집할아버지'],
+    ['20', '', '', '', '', '옆집할아버지'],
+    ['21', '', '', '구청직원', '', ''],
+  ];
+
+  const subCharacterHeaders = ['SCENE', '순희', '유령', '영수', '순영', '상모'];
+
+  const sceneData = [
+    ['PROLOGUE - 버려진 가게', '#1. PROLOGUE - 컴퍼니(off-stage)'],
+    ['S1 - 환상 속 순희의 베이커리 / 나상모 과자점', '#2. "어서오세요!" / "참아!" (Opening Sequence)'],
+    ['S2 - 순희 / 순영네 집', '#3. 한 사람 - 순희, 순영'],
+    ['S3 - 버려진 가게', '#4. The Ghost Song - 유령'],
+    ['S4 - 가게 앞 길', ''],
+    ['S5 - 가게 안', '#4A. "참아!" Reprise (순희 Excerpt) - 순희\n#4B. Ghost Song Rep. - 유령'],
+    ['S6 - 가게 안, 다음 날', '#5. 이상한 동업자 - 유령, 순희'],
+    ['S7 - 고스트 베이커리 안', ''],
+    ['S8 - 가게 안 / 가게 앞 거리', '#6. "어서오세요!" Reprise 1 (영수 Ver.) - 영수, 순희, 유령, 순영'],
+    ['S9 - 나상모 과자점', '#6A. "Sang Mo Tastes the Past" - 나상모'],
+    ['S10 - 고스트 베이커리', ''],
+    ['S11 - 서울, 1946년', '#7. FLASHBACK - 유령, 나상모, 앙상블'],
+    ['S12 - 가게 안', ''],
+    ['S13 - 순희 / 순영의 집', '#8. 한 사람 Reprise (순희 Ver.) - 순희\n#9. 이상한 동업자 Reprise (크리스마스 케이크 Ver.) - 순희, 유령'],
+    ['S14 - 가게 안', '#10. 프렌치 LP - 컴퍼니'],
+    ['S14A - 가게 앞', ''],
+    ['S15 - 가게 안', '#11. 나 같은 사람 - 영수'],
+    ['S16 - 가게 안, 밖', '#12. 나 혼자만 슬픈 크리스마스 - 유령, 앙상블'],
+    ['S17 - 가게 안', '#13. DANCE / PROLOGUE Reprise - 컴퍼니(off-stage), 영수'],
+    ['S17A - 서울 거리 위', '#13A. 앙순이 케이크 - 앙상블'],
+    ['S18 - 가게 안', ''],
+    ['S19 - 순희 / 순영의 집', '#14. 한 사람 Reprise #2 (순영 Ver.) - 순영'],
+    ['S20 - 가게 안', '#14B. FLASHBACK Reprise (나상모 Ver.) - 나상모'],
+    ['S21 - 가게 안', '#15. "어서오세요!" Reprise 2 - 영수, 순영, 구청 직원\n#16. 유령의 독백 - 유령'],
+    ['S22 - 가게 안', '#17. 안녕, 하기 전에 - 순희'],
+    ['S23 - 가게 안', '#18. Morning at Ghost Bakery - 앙상블']
+  ];
+
+  const sceneHeaders = ['장면', '넘버'];
 
   const VideoModal = () => {
     if (!showVideoModal || !selectedDate) return null;
@@ -135,11 +185,63 @@ const SecretPage = () => {
     );
   };
 
+  const SceneModal = () => {
+    if (!showSceneModal) return null;
+
+    return (
+      <div className="scene-modal-overlay" onClick={() => setShowSceneModal(false)}>
+        <div className="scene-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="scene-modal-header">
+            <h3>🎭 장면 정보</h3>
+            <button 
+              className="close-button" 
+              onClick={() => setShowSceneModal(false)}
+            >
+              ✕
+            </button>
+          </div>
+          <div className="scene-table-container">
+            <table className="scene-table">
+              <thead>
+                <tr>
+                  {sceneHeaders.map((header, index) => (
+                    <th key={index}>{header}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {sceneData.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((cell, cellIndex) => (
+                      <td key={cellIndex} className={cellIndex === 1 ? 'number-cell' : ''}>
+                        {cell.split('\n').map((line, lineIndex) => (
+                          <div key={lineIndex}>{line}</div>
+                        ))}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="secret-page">
+      <button 
+        className="hamburger-button"
+        onClick={() => setShowSceneModal(true)}
+        title="장면 정보 보기"
+      >
+        ☰
+      </button>
+
       <header className="dday-container">
         <div className="dday-title">🎯 공연까지</div>
-        <div className="dday-count">D-{ddayCount}</div>
+        <div className="dday-count">{ddayCount}일</div>
         <div className="dday-date">2025년 11월 8일</div>
       </header>
 
@@ -165,6 +267,37 @@ const SecretPage = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+        <div className="pairs-container">
+          <h2 className="pairs-title">부캐 리스트</h2>
+          <table className="pairs-table">
+            <thead>
+              <tr>
+                {subCharacterHeaders.map((header, index) => (
+                  <th key={index}>{header}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {subCharacterData.map((row, rowIndex) => (
+                <tr key={rowIndex}>
+                  {row.map((cell, cellIndex) => (
+                    <td key={cellIndex}>{cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="recording-container">
+          <h2 className="recording-title">🎙️ 녹음 TODO 목록</h2>
+          <ul className="recording-list">
+            <li>#1. Prologue - 컴퍼니</li>
+            <li>S2. 조카1, 조카2 목소리</li>
+            <li>#13. DANCE / PROLOGUE Reprise - 컴퍼니(off-stage), 영수</li>
+          </ul>
         </div>
 
         <div className="calendar-container">
@@ -196,6 +329,7 @@ const SecretPage = () => {
         </button>
       </div>
       <VideoModal />
+      <SceneModal />
     </div>
   );
 };
