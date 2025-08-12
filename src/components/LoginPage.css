@@ -42,6 +42,7 @@
   transition: border-color 0.3s ease;
   width: 100%;
   box-sizing: border-box;
+  height: 3rem;
 }
 
 .login-card input:focus {
@@ -61,6 +62,7 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 100%;
   box-sizing: border-box;
+  height: 3rem;
 }
 
 .login-card button:hover:not(:disabled) {
