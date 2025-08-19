@@ -9,6 +9,7 @@ const SecretPage = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [showSceneModal, setShowSceneModal] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // D-day 계산
@@ -92,13 +93,13 @@ const SecretPage = () => {
   };
 
   const pairsData = [
-    ['효은', '성현', '지섭/용수', '다혜', '효원/민석', '', ''],
-    ['수정', '유성', '성빈/용수', '다혜/가영', '효원/민석', '', ''],
-    ['진경', '용현', '성빈/용수', '다혜/가영', '효원/민석', '', ''],
-    ['은진', '유성/용현', '지섭/용수', '가영', '효원/민석', '', '']
+    ['A팀', '효은', '성현', '성빈', '다혜', '효원', 'D팀'],
+    ['B팀', '수정', '유성', '용수', '가영', '민석', 'A팀'],
+    ['C팀', '진경', '용현', '성빈', '다혜', '효원', 'B팀'],
+    ['D팀', '은진', '지섭', '용수', '가영', '민석', 'C팀']
   ];
 
-  const headers = ['순희', '유령', '영수', '순영', '나상모', '멀티(남)', '멀티(여)'];
+  const headers = ['', '순희', '유령', '영수', '순영', '나상모', '멀티'];
 
   const subCharacterData = [
     ['Prologue', '', '', '컴퍼니댄서', '컴퍼니댄서', ''],
@@ -270,6 +271,33 @@ const SecretPage = () => {
     );
   };
 
+  const ImageModal = () => {
+    if (!showImageModal) return null;
+
+    return (
+      <div className="image-modal-overlay" onClick={() => setShowImageModal(false)}>
+        <div className="image-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="image-modal-header">
+            <h3>📋 출연 정보</h3>
+            <button 
+              className="close-button" 
+              onClick={() => setShowImageModal(false)}
+            >
+              ✕
+            </button>
+          </div>
+          <div className="image-container">
+            <img 
+              src="/sinfo.png" 
+              alt="페어 정보" 
+              className="info-image"
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="secret-page">
       <button 
@@ -289,7 +317,16 @@ const SecretPage = () => {
       <div className="content">
 
         <div className="pairs-container">
-          <h2 className="pairs-title">페어 리스트</h2>
+          <div className="pairs-title-container">
+            <h2 className="pairs-title">페어 리스트</h2>
+            <button 
+              className="info-button"
+              onClick={() => setShowImageModal(true)}
+              title="페어 정보 보기"
+            >
+              ℹ️
+            </button>
+          </div>
           <table className="pairs-table">
             <thead>
               <tr>
@@ -388,6 +425,7 @@ const SecretPage = () => {
       </div>
       <VideoModal />
       <SceneModal />
+      <ImageModal />
     </div>
   );
 };
