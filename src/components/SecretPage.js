@@ -94,9 +94,9 @@ const SecretPage = () => {
 
   const pairsData = [
     ['A팀', '효은', '성현', '성빈', '다혜', '효원', 'D팀'],
-    ['B팀', '수정', '유성', '용수', '가영', '민석', 'A팀'],
+    ['B팀', '수정', '유성', '용수', '가영', '민석', 'C팀'],
     ['C팀', '진경', '용현', '성빈', '다혜', '효원', 'B팀'],
-    ['D팀', '은진', '지섭', '용수', '가영', '민석', 'C팀']
+    ['D팀', '은진', '지섭', '용수', '가영', '민석', 'D팀']
   ];
 
   const headers = ['', '순희', '유령', '영수', '순영', '나상모', '멀티'];
@@ -107,7 +107,7 @@ const SecretPage = () => {
     ['6', '', '일꾼1', '일꾼2', '', ''],
     ['7', '손님2', '', '', '손님1', ''],
     ['9', '상모직원2', '', '상모직원1', 'VIP', ''],
-    ['11', '손님1', '손님2', '손님3, 간판장수', '손님4', '인쇄소주인'],
+    ['11', '손님1', '손님2', '손님4', '손님3', '인쇄소주인'],
     ['12', '', '', '구청직원', '', ''],
     ['14', '', '', '상모직원', '', ''],
     ['16', '손님1', '손님2', '손님3', '손님4', ''],
@@ -314,6 +314,30 @@ const SecretPage = () => {
       </header>
 
       <div className="content">
+
+        <div className="links-container">
+          <h2 className="links-title">🔗 유용한 링크</h2>
+          <div className="links-list">
+            <a 
+              href="https://www.test.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="link-item"
+            >
+              <span className="link-label">소품시트</span>
+              <span className="link-url">https://docs.google.com/spreadsheets/d/1Jp5vA-GDanr-umpRi1UX2vycB9Nbsl-Xgiq4wa_KRNY/edit?usp=sharing</span>
+            </a>
+            <a 
+              href="https://www.test2.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="link-item"
+            >
+              <span className="link-label">MR시트</span>
+              <span className="link-url">https://docs.google.com/spreadsheets/d/1vIL9utcKE14U36NhJuxhUghD3hiYLG89obkPkCQweps/htmlview</span>
+            </a>
+          </div>
+        </div>
 
         <div className="pairs-container">
           <div className="pairs-title-container">
