@@ -319,7 +319,7 @@ const SecretPage = () => {
           <h2 className="links-title">🔗 유용한 링크</h2>
           <div className="links-list">
             <a 
-              href="https://www.test.com" 
+              href="https://docs.google.com/spreadsheets/d/1Jp5vA-GDanr-umpRi1UX2vycB9Nbsl-Xgiq4wa_KRNY/edit?usp=sharing" 
               target="_blank" 
               rel="noopener noreferrer"
               className="link-item"
@@ -328,7 +328,7 @@ const SecretPage = () => {
               <span className="link-url">https://docs.google.com/spreadsheets/d/1Jp5vA-GDanr-umpRi1UX2vycB9Nbsl-Xgiq4wa_KRNY/edit?usp=sharing</span>
             </a>
             <a 
-              href="https://www.test2.com" 
+              href="https://docs.google.com/spreadsheets/d/1vIL9utcKE14U36NhJuxhUghD3hiYLG89obkPkCQweps/htmlview" 
               target="_blank" 
               rel="noopener noreferrer"
               className="link-item"
