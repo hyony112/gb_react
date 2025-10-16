@@ -336,6 +336,33 @@ const SecretPage = () => {
               <span className="link-label">MR시트</span>
               <span className="link-url">https://docs.google.com/spreadsheets/d/1vIL9utcKE14U36NhJuxhUghD3hiYLG89obkPkCQweps/htmlview</span>
             </a>
+            <a 
+              href="https://drive.google.com/drive/folders/1EQCApdlJd5C45QjX0h5UG7kTISVn_KqA" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="link-item"
+            >
+              <span className="link-label">MR자료</span>
+              <span className="link-url">https://drive.google.com/drive/folders/1EQCApdlJd5C45QjX0h5UG7kTISVn_KqA</span>
+            </a>
+            <a 
+              href="https://docs.google.com/presentation/d/1wqsdI1fOWk1ap_fmjHGSth9zf7thbTMLVEO7fevTfV0/mobilepresent?slide=id.g38beef995b7_0_7" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="link-item"
+            >
+              <span className="link-label">의상자료</span>
+              <span className="link-url">https://docs.google.com/presentation/d/1wqsdI1fOWk1ap_fmjHGSth9zf7thbTMLVEO7fevTfV0/mobilepresent?slide=id.g38beef995b7_0_7</span>
+            </a>
+            <a 
+              href="https://drive.google.com/drive/folders/1x_zXW2NdI9Lwi71UnVJY1VWOFzRLiThr" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="link-item"
+            >
+              <span className="link-label">고베로고</span>
+              <span className="link-url">https://drive.google.com/drive/folders/1x_zXW2NdI9Lwi71UnVJY1VWOFzRLiThr</span>
+            </a>
           </div>
         </div>
 
